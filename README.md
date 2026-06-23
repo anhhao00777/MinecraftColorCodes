@@ -20,11 +20,32 @@ Now you can use it!
 Example:
 ```
 <script>
+setFormatMode(0); // use §
 var yourMOTD = "§d§lnerd.nu§8: §6§oCreative Rev 28";
 var newMOTD = yourMOTD.replaceColorCodes();
 console.log(newMOTD);
 <script>
 ```
+
+Add "&" support:
+```
+<script>
+setFormatMode(1); // use &
+var yourMOTD = "&d&lnerd.nu&8: &6&oCreative Rev 28";
+var newMOTD = yourMOTD.replaceColorCodes();
+console.log(newMOTD);
+<script>
+```
+Add hex "<#00ffff>" support:
+```
+<script>
+setFormatMode(1); // use &
+var yourMOTD = "<#6C3415>&l&oTest Text";
+var newMOTD = yourMOTD.replaceColorCodes();
+console.log(newMOTD);
+<script>
+```
+
 Simple enough. Get your string, attach the function at the end (Don't forget the brackets, they are essential) and voila! You can then do whatever you like with it!
 
 
