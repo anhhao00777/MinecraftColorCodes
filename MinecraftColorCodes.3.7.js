@@ -1,5 +1,6 @@
 
 var _obfuscatorSpeed = 5;
+var _autoConvert = true;
 /**
  * 
  * @param {String} text include & or §
@@ -21,8 +22,11 @@ function clearAllObfuscators(){}
         [currentName]: []
     };
     var styleMap = {};
+    var charMode = 1;
     window.setFormatMode = (mode = 1) => {
         var char = 1 ? "&" : "§";
+        charMode = mode;
+
         styleMap = {
             [char + '4']: 'font-weight:normal;text-decoration:none;color:#be0000',
             [char + 'c']: 'font-weight:normal;text-decoration:none;color:#fe3f3f',
@@ -52,7 +56,7 @@ function clearAllObfuscators(){}
         };
     }
     setFormatMode();
-    
+
     function obfuscate(string, elem) {
         var magicSpan,
             currNode,
@@ -102,12 +106,18 @@ function clearAllObfuscators(){}
         var elem = document.createElement('span'),
             obfuscated = false;
 
-
+        var once = false;
         for (var i = 0; i < len; i++) {
             if (codes[i] === "&?") {
-                let pos = styleMap[codes[i]].index++;
+                let pos = styleMap[codes[i]].index;
                 let color = styleMap[codes[i]].colors[pos];
-                if (color) elem.style.color = color.replace("<", '').replace(">", '');
+                if (!once) {
+                    once = true;
+                    styleMap[codes[i]].index++;
+
+                    if (color) elem.style.color = color.replace("<", '').replace(">", '');
+                }
+
             } else {
                 elem.style.cssText += styleMap[codes[i]] + ';';
             }
@@ -119,7 +129,26 @@ function clearAllObfuscators(){}
         if (!obfuscated) elem.innerHTML = string;
         return elem;
     }
+    function toHex(format){
+        format = format.replace("&x", "");
+        let col = format.split("&");
+        return `<#${col.join("")}>`;
+    }
     function parseStyle(string) {
+
+        if(_autoConvert){
+            let inp = ["§", "&"];
+            if(charMode === 0) inp.reverse();
+            string = string.replace(...inp);
+        }
+
+        let convert = string.match(/&x&.{1}.{2}.{2}.{2}.{2}.{2}/g) || [];
+
+        for (let i = 0; i < convert.length; i++) {
+            const col = convert[i];
+
+            string = string.replace(col, toHex(col));
+        }
 
         let addon = string.match(/<.{7}>/g) || [];
 
@@ -136,6 +165,8 @@ function clearAllObfuscators(){}
             string = string.replace(rep, "&?");
         }
 
+        
+
 
         var codes = string.match(/&.{1}/g) || [],
             indexes = [],
@@ -151,10 +182,6 @@ function clearAllObfuscators(){}
 
         for (var i = 0; i < len; i++) {
             indexes.push(string.indexOf(codes[i]));
-            if (codes[i]?.indexOf("<") > -1) {
-                string = string.replace(codes[i], '\x00\x00\x00\x00\x00\x00\x00\x00\x00');
-                continue;
-            }
             string = string.replace(codes[i], '\x00\x00');
         }
         if (indexes[0] !== 0) {
