@@ -20,6 +20,7 @@ Now you can use it!
 - Add '&' support
 - Fix &k: when meet any & next just stop obfuscator
 - Add hex: <#00ffff> ...
+- Add &x colors
 ##Usage
 Example:
 ```
@@ -44,13 +45,15 @@ Add hex "<#00ffff>" support:
 ```
 <script>
 setFormatMode(1); // use &
-var yourMOTD = "<#6C3415>&l&oTest Text";
+  // "This Is Hex Color, Ahhhh"
+var yourMOTD = "<#D200FF>&lT<#CA05FE>&lh<#C30AFD>&li<#BB10FC>&ls <#AC1AFA>&lI<#A41FF9>&ls <#952AF7>&lH<#8E2FF6>&le<#8634F5>&lx <#773FF2>&lC<#6F44F1>&lo<#6749F0>&ll<#604EEF>&lo<#5853EE>&lr<#5159ED>&l, <#4163EB>&lA<#3A68EA>&lh<#326EE9>&lh<#2B73E8>&lh<#2378E7>&lh";
+
 var newMOTD = yourMOTD.replaceColorCodes();
 console.log(newMOTD);
 <script>
 ```
-Test (not stable)
-<img width="681" height="648" alt="Screenshot 2026-06-23 204138" src="https://github.com/user-attachments/assets/97233f44-5023-47bb-9e0c-788a6e131d06" />
+## Test long text
+<img width="787" height="565" alt="Screenshot 2026-06-23 221721" src="https://github.com/user-attachments/assets/c127c55e-45e2-4de0-9fa0-338ca73b034c" />
 
 
 Simple enough. Get your string, attach the function at the end (Don't forget the brackets, they are essential) and voila! You can then do whatever you like with it!
