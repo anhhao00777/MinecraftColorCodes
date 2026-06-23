@@ -21,6 +21,10 @@ Now you can use it!
 - Fix &k: when meet any & next just stop obfuscator
 - Add hex: <#00ffff> ...
 - Add &x colors
+- Global _obfuscatorSpeed - number of millisecond, speed for obfuscator effect higher for performance
+- Global _autoConvert - boolean, auto replace text § to & or else
+- Function parseMinecraftColorCode(text: string, name: string): same with String.prototype.replaceColorCodes
+- Function setFormatMode(mode: number): 0 or 1 ~ § or &
 ##Usage
 Example:
 ```
