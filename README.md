@@ -15,7 +15,11 @@ Like so:
 You can also link the JS file at the bottom of the webpage, right before the ```body``` tag. 
 
 Now you can use it!
-
+## Fork note:
+- I'm not really know how these code work just fix and add what I can
+- Add '&' support
+- Fix &k: when meet any & next just stop obfuscator
+- Add hex: <#00ffff> ...
 ##Usage
 Example:
 ```
@@ -45,6 +49,9 @@ var newMOTD = yourMOTD.replaceColorCodes();
 console.log(newMOTD);
 <script>
 ```
+Test (not stable)
+<img width="681" height="648" alt="Screenshot 2026-06-23 204138" src="https://github.com/user-attachments/assets/97233f44-5023-47bb-9e0c-788a6e131d06" />
+
 
 Simple enough. Get your string, attach the function at the end (Don't forget the brackets, they are essential) and voila! You can then do whatever you like with it!
 
