@@ -17,19 +17,18 @@ You can also link the JS file at the bottom of the webpage, right before the ```
 Now you can use it!
 ## Fork note:
 - I'm not really know how these code work just fix and add what I can
-- Add '&' support
+- Add '&' support as default
 - Fix &k: when meet any & next just stop obfuscator
 - Add hex: <#00ffff> ...
 - Add &x colors
 - Global _obfuscatorSpeed - number of millisecond, speed for obfuscator effect higher for performance
-- Global _autoConvert - boolean, auto replace text § to & or else
+- Global _autoConvert - boolean, auto replace text § to & 
 - Function parseMinecraftColorCode(text: string, name: string): same with String.prototype.replaceColorCodes
-- Function setFormatMode(mode: number): 0 or 1 ~ § or &
 ##Usage
 Example:
 ```
 <script>
-setFormatMode(0); // use §
+_autoConvert = true; // use § and &
 var yourMOTD = "§d§lnerd.nu§8: §6§oCreative Rev 28";
 var newMOTD = yourMOTD.replaceColorCodes();
 console.log(newMOTD);
@@ -39,7 +38,6 @@ console.log(newMOTD);
 Add "&" support:
 ```
 <script>
-setFormatMode(1); // use &
 var yourMOTD = "&d&lnerd.nu&8: &6&oCreative Rev 28";
 var newMOTD = yourMOTD.replaceColorCodes();
 console.log(newMOTD);
@@ -48,7 +46,6 @@ console.log(newMOTD);
 Add hex "<#00ffff>" support:
 ```
 <script>
-setFormatMode(1); // use &
   // "This Is Hex Color, Ahhhh"
 var yourMOTD = "<#D200FF>&lT<#CA05FE>&lh<#C30AFD>&li<#BB10FC>&ls <#AC1AFA>&lI<#A41FF9>&ls <#952AF7>&lH<#8E2FF6>&le<#8634F5>&lx <#773FF2>&lC<#6F44F1>&lo<#6749F0>&ll<#604EEF>&lo<#5853EE>&lr<#5159ED>&l, <#4163EB>&lA<#3A68EA>&lh<#326EE9>&lh<#2B73E8>&lh<#2378E7>&lh";
 
