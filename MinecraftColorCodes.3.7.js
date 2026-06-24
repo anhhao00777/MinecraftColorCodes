@@ -7,14 +7,9 @@ var _autoConvert = true;
  * @param {String} name set name to prevent clear obfuscators or not get clear whent parse another text
  * @returns {DocumentFragment | HTMLSpanElement} return to <span> if error
  */
-function parseMinecraftColorCode(text, name = "default"){}
-/**
- * 
- * @param {Number} mode 0 = '§' character | 1 = '&' character
- */
-function setFormatMode(mode = 1){}
+function parseMinecraftColorCode(text, name = "default") { }
 
-function clearAllObfuscators(){}
+function clearAllObfuscators() { }
 (() => {
 
     var currentName = "default";
@@ -22,40 +17,34 @@ function clearAllObfuscators(){}
         [currentName]: []
     };
     var styleMap = {};
-    var charMode = 1;
-    window.setFormatMode = (mode = 1) => {
-        var char = 1 ? "&" : "§";
-        charMode = mode;
 
-        styleMap = {
-            [char + '4']: 'font-weight:normal;text-decoration:none;color:#be0000',
-            [char + 'c']: 'font-weight:normal;text-decoration:none;color:#fe3f3f',
-            [char + '6']: 'font-weight:normal;text-decoration:none;color:#d9a334',
-            [char + 'e']: 'font-weight:normal;text-decoration:none;color:#fefe3f',
-            [char + '2']: 'font-weight:normal;text-decoration:none;color:#00be00',
-            [char + 'a']: 'font-weight:normal;text-decoration:none;color:#3ffe3f',
-            [char + 'b']: 'font-weight:normal;text-decoration:none;color:#3ffefe',
-            [char + '3']: 'font-weight:normal;text-decoration:none;color:#00bebe',
-            [char + '1']: 'font-weight:normal;text-decoration:none;color:#0000be',
-            [char + '9']: 'font-weight:normal;text-decoration:none;color:#3f3ffe',
-            [char + 'd']: 'font-weight:normal;text-decoration:none;color:#fe3ffe',
-            [char + '5']: 'font-weight:normal;text-decoration:none;color:#be00be',
-            [char + 'f']: 'font-weight:normal;text-decoration:none;color:#ffffff',
-            [char + '7']: 'font-weight:normal;text-decoration:none;color:#bebebe',
-            [char + '8']: 'font-weight:normal;text-decoration:none;color:#3f3f3f',
-            [char + '0']: 'font-weight:normal;text-decoration:none;color:#000000',
-            [char + 'l']: 'font-weight:bold',
-            [char + 'n']: 'text-decoration:underline;text-decoration-skip:spaces',
-            [char + 'o']: 'font-style:italic',
-            [char + 'm']: 'text-decoration:line-through;text-decoration-skip:spaces',
-            
-            [char + '?']: {
-                index: 0,
-                colors: []
-            }
-        };
-    }
-    setFormatMode();
+    styleMap = {
+        '&4': 'font-weight:normal;text-decoration:none;color:#be0000',
+        '&c': 'font-weight:normal;text-decoration:none;color:#fe3f3f',
+        '&6': 'font-weight:normal;text-decoration:none;color:#d9a334',
+        '&e': 'font-weight:normal;text-decoration:none;color:#fefe3f',
+        '&2': 'font-weight:normal;text-decoration:none;color:#00be00',
+        '&a': 'font-weight:normal;text-decoration:none;color:#3ffe3f',
+        '&b': 'font-weight:normal;text-decoration:none;color:#3ffefe',
+        '&3': 'font-weight:normal;text-decoration:none;color:#00bebe',
+        '&1': 'font-weight:normal;text-decoration:none;color:#0000be',
+        '&9': 'font-weight:normal;text-decoration:none;color:#3f3ffe',
+        '&d': 'font-weight:normal;text-decoration:none;color:#fe3ffe',
+        '&5': 'font-weight:normal;text-decoration:none;color:#be00be',
+        '&f': 'font-weight:normal;text-decoration:none;color:#ffffff',
+        '&7': 'font-weight:normal;text-decoration:none;color:#bebebe',
+        '&8': 'font-weight:normal;text-decoration:none;color:#3f3f3f',
+        '&0': 'font-weight:normal;text-decoration:none;color:#000000',
+        '&l': 'font-weight:bold',
+        '&n': 'text-decoration:underline;text-decoration-skip:spaces',
+        '&o': 'font-style:italic',
+        '&m': 'text-decoration:line-through;text-decoration-skip:spaces',
+
+        '&?': {
+            index: 0,
+            colors: []
+        }
+    };
 
     function obfuscate(string, elem) {
         var magicSpan,
@@ -77,14 +66,17 @@ function clearAllObfuscators(){}
         }
         function init(el, str) {
             el.className = "format-obfuscate";
-            var i = 0,
-                obsStr = str || el.innerHTML,
-                len = obsStr.length;
+            var i = 0;
+            var obsStr = str || el.innerHTML;
 
-            if(!obfuscatorsObj[currentName]){
+            obsStr = obsStr.replaceAll("\x00", ""); // remove black char to match text length
+
+            var len = obsStr.length;
+
+            if (!obfuscatorsObj[currentName]) {
                 obfuscatorsObj[currentName] = [];
             }
-            if(typeof _obfuscatorSpeed !== "number") _obfuscatorSpeed = 1;
+            if (typeof _obfuscatorSpeed !== "number") _obfuscatorSpeed = 1;
 
             obfuscatorsObj[currentName].push(window.setInterval(function () {
                 if (i >= len) i = 0;
@@ -108,17 +100,21 @@ function clearAllObfuscators(){}
 
         var once = false;
         for (var i = 0; i < len; i++) {
+            
             if (codes[i] === "&?") {
                 let pos = styleMap[codes[i]].index;
                 let color = styleMap[codes[i]].colors[pos];
                 if (!once) {
                     once = true;
+
                     styleMap[codes[i]].index++;
 
                     if (color) elem.style.color = color.replace("<", '').replace(">", '');
+
                 }
 
             } else {
+
                 elem.style.cssText += styleMap[codes[i]] + ';';
             }
             if (codes[i] === '&k') {
@@ -129,17 +125,19 @@ function clearAllObfuscators(){}
         if (!obfuscated) elem.innerHTML = string;
         return elem;
     }
-    function toHex(format){
+    function toHex(format) {
         format = format.replace("&x", "");
         let col = format.split("&");
         return `<#${col.join("")}>`;
     }
     function parseStyle(string) {
+        styleMap["&?"] = {
+            index: 0,
+            colors: []
+        };
 
-        if(_autoConvert){
-            let inp = ["§", "&"];
-            if(charMode === 0) inp.reverse();
-            string = string.replace(...inp);
+        if (_autoConvert) {
+            string = string.replaceAll("§", "&");
         }
 
         let convert = string.match(/&x&.{1}.{2}.{2}.{2}.{2}.{2}/g) || [];
@@ -152,10 +150,7 @@ function clearAllObfuscators(){}
 
         let addon = string.match(/<.{7}>/g) || [];
 
-        styleMap["&?"] = {
-            index: 0,
-            colors: []
-        };
+
 
         for (let i = 0; i < addon.length; i++) {
             const rep = addon[i];
@@ -165,8 +160,8 @@ function clearAllObfuscators(){}
             string = string.replace(rep, "&?");
         }
 
-        
 
+        string = string.replace(/\n|\\n/g, '<br>&r '); // reset in new line
 
         var codes = string.match(/&.{1}/g) || [],
             indexes = [],
@@ -175,8 +170,7 @@ function clearAllObfuscators(){}
             indexDelta,
             noCode,
             final = document.createDocumentFragment(),
-            len = codes.length,
-            string = string.replace(/\n|\\n/g, '<br>');
+            len = codes.length;
 
 
 
@@ -209,7 +203,7 @@ function clearAllObfuscators(){}
         return final;
     }
     function clearObfuscators(name = "default") {
-        
+
         if (Array.isArray(obfuscatorsObj[name])) {
             var i = obfuscatorsObj[name].length;
             for (; i--;) {
@@ -218,10 +212,10 @@ function clearAllObfuscators(){}
             obfuscatorsObj[name] = [];
         }
     }
-    window.clearAllObfuscators = ()=>{
+    window.clearAllObfuscators = () => {
         for (const key in obfuscatorsObj) {
             if (!Object.hasOwn(obfuscatorsObj, key)) continue;
-            
+
             clearObfuscators(key);
         }
     }
@@ -279,8 +273,9 @@ function clearAllObfuscators(){}
             if (safeBr > max) break;
             const pos = text.indexOf("&k", i);
             if (pos !== -1) {
-
-                for (let p = pos + 1; p < text.length; p++) {
+                // &k&?
+                // skip if right next is &
+                for (let p = pos + 3; p < text.length; p++) {
                     if (safeBr > max) break;
 
                     safeBr++;
@@ -295,6 +290,10 @@ function clearAllObfuscators(){}
 
             }
         }
+
+        let empty = text.match(/&{1}.\n/g) || [];
+        empty.forEach(s => text = text.replace(s, "\n"));
+
         return text;
     }
 
